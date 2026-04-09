@@ -1,0 +1,12 @@
+[
+    "Playwright Test for VSCode(Sử dụng UI để generate code)": [
+        "Để chọn một locator qua thao tác trên giao diện": [
+            "Màn hình Extension Tesing -> có 2 phần là Test Explorer và Playwright"
+            "Chọn PLAYWRIGHT -> Pick Locator"
+        ]
+        "Để tạo một file spec.ts mẫu và thao tác trên giao diện để generate code": [
+            "Màn hình Extension Tesing -> có 2 phần là Test Explorer và Playwright"
+            "Chọn PLAYWRIGHT -> Records new"
+        ]
+    ]
+]

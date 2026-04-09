@@ -1,0 +1,46 @@
+[
+    "npm(dùng để cài đặt các thư viện cần thiết)": [
+        "npm init playwright@latest": "Lệnh tạo dự án playwright mới"
+        "npm install @playwright/test@latest": "Chỉ cài đặt các thư viện cần thiết khi clone dự án playwight từ git về"
+        "npm cache clean": "Xóa các gói thư viện của Nodejs"
+    ]
+    "npx(Khởi chạy các testcase)": [
+        "npx playwright install --with-deps": "Tải các trình duyệt cần thiết với phiên bản mới"
+        "npx playwright test(Chạy thử các hàm test có sẳn)": [
+            "--ui": "--ui dùng để mở trên trình duyệt playwright, tất cả trong một"
+            "--project=chromium": "chromium là chạy trên chrome"
+            "--headed": "--headed là chạy browser từng bước một để xem tuần tự"
+            "tests/example.spec.ts": "Chỉ định file muốn chạy"
+            "tests/todo-page/": "Chỉ định folder muốn chạy"
+            "--grep @fast": "Chỉ chạy các test có tag @fast"
+            "--grep-invert @fast": "Chỉ chạy các test không có tag @fast"
+            "--last-failed": "Chạy các testcases bị failed"
+            "--debug": "Chạy debug khi có breakpoint"
+            "--trace on": "Chạy Trace viewer không có UI"
+            "--workers=1": "Chạy test với 1 luồng, tránh xung đột đọc ghi dữ liệu"
+            "--fail-on-flaky-tests": "Chỉ định các test may rủi là failed"
+            "--fully-parallel": "Bật chạy song song toàn bộ test, nhanh hơn"
+            "--global-timeout [miliseconds]": "Giới hạn thời gian toàn bộ test chạy"
+            "--list": "Liệt kê các testcase sẽ chạy qua"
+            "--max-failures 1": "Dừng lại lệnh khi có 1 bài test bị Failed, để tránh chạy hết"
+            "--no-deps": "Không chạy các Dependencies của tự án, ví dụ login trc rồi mới chạy test"
+            "--output": "Tạo Results vào thư mục chỉ định, không vào test-results nữa"
+            "--pass-with-no-tests": "Đảm bảo chạy thành công ngay cả khi ko có test nào"
+            "--quiet": "Chạy và giữ cho terminal clean, chỉ hiện khi có test failed"
+            "--repeat-each=10": "Lặp lại bài test nhiều lần, check lỗi Flaky ngẫu nhiên, stress test nhẹ"
+            "--reporter=line,html": "Report trên terminal và html sinh động"
+            "--retries=3": "Thử lại với các bài test bị failed để check lỗi Flaky"
+            "--shard=1/4": "Chia máy ra để chạy, 4 máy, chỉ dùng cho CI/CD để đẩy tốc độ chạy"
+            "--test-list=my-tests.txt or --test-list-invert <file>": "Gom file cần test vào .txt, chạy 1 lần cho tất cả hoặc chạy tất cả và bỏ qua"
+            "--timeout <timeout>": "Chỉ định thời gian chờ"
+            "--trace <mode>": "Có các option tối ưu cho CI/CD"
+            "--tsconfig": "Cấu hình theo staging, dev, khá hay mà chưa biết dùng"
+            "--update-snapshots": "Cập nhật lại tất cả ảnh chụp UI, có các cấu hình khác nhau"
+            "--update-source-method=patch": "Cập nhật lại toàn bộ locator cũ sang mới khi UI thay đổi"
+        ]
+        "npx playwright merge-reports ./reports": "Gom các file .zip report lại với nhau"
+        "npx playwright clear-cache": "Gặp lỗi trình duyệt thì clear cache chạy lại từ đầu"
+        "npx playwright show-report": "Chạy reports để xem kết quả"
+        "npx playwright codegen demo.playwright.dev/todomvc": "Tạo cửa sổ thao tác và tạo code tự động"
+    ]
+]

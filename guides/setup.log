@@ -1,0 +1,39 @@
+[
+    "Download": [
+        "Tải về Nodejs với npm": [
+            "https://nodejs.org/en/download"
+            "Bản [Windows Installer(.msi)]"
+        ]
+        "Tải VS Code": "https://code.visualstudio.com/download"
+    ]
+    "Lưu ý khi sử dụng": [
+        "Cài đặt một Profile mới(Để tối ưu cho việc cài đặt các Extension cho Testing)": [
+            "Vào Setting -> Profile để New 1 cái mới, sau đó cài các Extension bên dưới"
+        ]
+        "Cài một số Extension cho VS Code": [
+            "Playwright Test for VSCode": "Nó sẽ hỗ trợ UI thao tác tốt nhất cho Testing"
+            "ESLint": "Kiểm tra lỗi cú pháp Typescript, Javascript"
+            "Prettier - Code formatter": "Format code lại cho đẹp"
+            "Console Ninja": "Hiển thị Console.log bên trong code thay vì qua terminal"
+            "Todo Tree": "Viết lại công việc cần làm và hiển thị theo cây"
+            "Path Intellisense": "Gợi ý đường dẫn tới file trong code"
+            "Peacock": "Đổi màu các cửa sổ window để không nhầm lẫn"
+        ]
+        "Thêm một số Setting để tối ưu cho VS Code": [
+            "[Ctrl + Shift + P] gõ lệnh Open User Setting rồi thêm đoạn sau vào cuối file": [
+                "editor.mouseWheelZoom": true,
+                "editor.formatOnPaste": true,
+                "terminal.integrated.scrollback": 10000,
+            ]
+        ]
+    ]
+    "Sau khi clone dự án về thì chạy lần lược các lệnh sau": [
+        "npm install @playwright/test@latest": "Cập nhập tất cả thư viện cần thiết"
+        "npx playwright install --with-deps": "Cài đặt mới các trình duyệt cần thiết cùng thư viện đi kèm"
+    ]
+    "Mở quyền chạy Terminal trong VS Code(Option nếu gặp lỗi chạy lệnh)": [
+        "Vào PowerShell, chọn Run Run as Administrator"
+        "Chạy lệnh": "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser"
+        "Chọn Yes để cài đặt"
+    ]
+]

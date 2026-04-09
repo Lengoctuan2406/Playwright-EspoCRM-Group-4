@@ -1,0 +1,15 @@
+[
+    "Shortcuts VS Code": [
+        "F1": "Các lệnh của tất cả Extension ở đây, có thể tìm kiếm và khởi chạy"
+        "Ctrl + T": "Tìm kiếm và truy cập nhanh vào 1 file nào đấy, hoặc theo Symbol"
+        "Ctrl + /": "Tạo 1 dòng Comments"
+        "Shift + Alt + A": "Tạo cho nhiều dòng Comments"
+        "Ctrl + H": "Tìm kiếm hoặc thay thế từ nào đó trong file, không phải tìm toàn bộ"
+        "Alt + Click": "Thêm nhiều con trỏ để nhập liệu lệnh giống nhau"
+        "Ctrl + L": "Quét chuột bất kì vào một số line và ấn phím để tô đen hết"
+        "Shift + Alt + F": "Format toàn bộ file cho đẹp"
+        "Ctrl + S": "Lưu lại file"
+        "Ctrl + Shift + H": "Bật tìm kiếm toàn bộ hoặc thay thế toàn bộ"
+        "Ctrl + Shift + U": "Bật cửa sổ terminal, output lên để check"
+    ]
+]

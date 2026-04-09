@@ -1,0 +1,58 @@
+[
+    "Hàm import": [
+        "import { test, expect } from '@playwright/test';": "Thêm thư viện Testing ban đầu"
+    ]
+    "Hàm phổ biến của playwright": [
+        "test('Tiêu đề', async ({ page }) => {thêm code vào đây});": "Hàm chạy test của playwright"
+        "test.describe('navigation', () => {thêm các test vào đây});": "dùng để nhóm các test lại"
+        "test.skip()": "Bỏ qua bài test"
+        "test.fail()": "Bài test thành công khi nó failed"
+        "test.fixme()": "Bài test đang lỗi, chưa sửa chữa và không được chạy"
+        "test.slow()": "Đẩy timeout của bài test lên gấp 3 lần để tránh chậm"
+        "test.only()": "Chỉ chạy bài test này, dùng cho debug"
+        "test('', { tag: '@fast' }, async ({ page }) => { ... });": "Thêm tag cho test để run nhanh"
+        "test.info().annotations.push()": "Thêm chú thích chi tiết khi chạy report để xem test"
+    ]
+    "Hàm xử lý liên quan đến page": [
+        "await page.goto('https://playwright.dev/');": "Truy cập vào trang web"
+        "await page.getByPlaceholder('Nhập mật khẩu')": "Tìm kiếm bằng placeholder"
+        "await page.getByLabel('Upload file')": "Tìm kiếm bằng label"
+        "getByRole": [
+            "await page.getByRole('link', { name: 'Get started' })": "Truy cập link có name"
+            "await page.getByRole('heading', { name: 'Installation' })": "Truy cập heading có name"
+            "await page.getByRole('checkbox', { name: 'I agree to the terms' })": "Truy cập checkbox và check vào, tức là bằng true, nếu check trước rồi thì thôi"
+        ]
+        "keyboard": [
+        ]
+        "Hàm xử lý sau khi trỏ đến elements bất kì": [
+            "await page.getByRole().click({button: 'right',modifiers: ['Shift'],position: { x: 23, y: 32 },});": "Tùy chính click"
+            "await page.locator('canvas').click(...)": "Dùng cho click vào tọa độ trên màn hình"
+            "await page.getByRole('checkbox').uncheck(); .check();": "Bỏ check hoặc check vào checkbox"
+            "await page.getByRole('textbox').fill('example value');": "Nhập vào input"
+            "await page.getByRole().pressSequentially();": "Nhập chữ lần lượt, dùng cho test gợi ý"
+            "await page.getByRole().press('Backspace');": "Nhấn phím bất kì trong textbox"
+            "await page.getByLabel('Upload files').setInputFiles([path.join(__dirname, 'file1.txt'),path.join(__dirname, 'file2.txt'),]);": "Thêm file vào input"
+            "await page.getByLabel('Upload file').setInputFiles([]);": "Xóa file trong input"
+            "await page.getByLabel().selectOption('blue');": "Chọn option trong select"
+        ]
+    ]
+    "Hàm xử lý expect mong đợi để test thành công": [
+        "await expect().toBeVisible();": "Kiểm tra phần tử có hiển thị hay không"
+        "await expect().toBeChecked();": "Kiểm tra checkbox có được check hay không"
+        "await expect().toBeEnabled();": "Kiểm tra phần tử có được phép thao tác hay bị disable"
+        "await expect().toBeDisabled();": "Kiểm tra disable phần tử hay chưa"
+        "await expect().toBeVisible();": "Phần tử có hiển thị hay bị che khuất"
+        
+        "await expect().toHaveText(/welcome/i);": "Kiểm tra khớp text trong thẻ, không bao gồm input"
+        "await expect().toContainText('substring');": "Phần tử chứa nội dung đó thì được coi là thành công"
+        "await expect().toHaveValue(/[0-9]/);": "Dùng để kiểm tra value trong form input"
+        "await expect(page).toHaveTitle(/Playwright/);": "Page có title đó thì được coi là thành công"
+        
+        "await expect().toHaveAttribute('type', 'text');": "Kiểm tra phần tử có type phù hợp chưa, các Attribute khác"
+        "await expect(list).toHaveCount(3);": "Kiểm tra số phần tử con trong list"
+        "await expect(page).toHaveURL('https://playwright.dev/docs/intro');": "Kiểm tra phù hợp đường dẫn"
+        "await expect().toBeTruthy();": "Kiểm tra có phải giá trị đúng hay không, ví dụ: 1, true, khác null"
+        "await expect(fruits).toEqual(['Apple', 'Banana', 'Orange']);": "Kiểm tra nội dung giữa hai phần tử"
+        "await expect(fruits).toContain('Banana');": "Kiểm tra mảng có chứa phần tử"
+    ]
+]
