@@ -1,10 +1,10 @@
-# Playwright SuiteCRM - Group 4
+# Playwright EspoCRM - Group 4
 
-Dự án Automation Testing sử dụng Playwright cho phần mềm SuiteCRM.
+Dự án Automation Testing sử dụng Playwright cho phần mềm EspoCRM.
 
 ## Giới thiệu
 
-Dự án này được xây dựng nhằm mục đích kiểm thử tự động (Automation Testing) cho hệ thống SuiteCRM sử dụng Playwright - một framework testing hiện đại và mạnh mẽ. Dự án được phát triển bởi nhóm 4 trong khuôn khổ Final Capstone.
+Dự án này được xây dựng nhằm mục đích kiểm thử tự động (Automation Testing) cho hệ thống EspoCRM sử dụng Playwright - một framework testing hiện đại và mạnh mẽ. Dự án được phát triển bởi nhóm 4 trong khuôn khổ Final Capstone.
 
 ### Công nghệ sử dụng
 
@@ -27,8 +27,8 @@ Dự án này được xây dựng nhằm mục đích kiểm thử tự động
 ### Bước 2: Clone dự án về máy
 
 ```bash
-git clone https://github.com/Lengoctuan2406/Playwright-SuiteCRM-Group-4.git
-cd Playwright-SuiteCRM-Group-4
+git clone https://github.com/Lengoctuan2406/Playwright-EspoCRM-Group-4.git
+cd Playwright-EspoCRM-Group-4
 ```
 
 ### Bước 3: Cài đặt các Extension cho VS Code
@@ -117,7 +117,7 @@ Các cấu hình quan trọng:
 ## Cấu trúc dự án
 
 ```
-Playwright-SuiteCRM-Group-4/
+Playwright-EspoCRM-Group-4/
 ├── tests/                  # Thư mục chứa các test cases
 │   └── example.spec.ts    # File test mẫu
 ├── guides/                # Thư mục hướng dẫn
