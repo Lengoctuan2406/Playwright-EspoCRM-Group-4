@@ -1,21 +1,21 @@
 {
-  "name": "playwright-suitecrm-group-4",
+  "name": "playwright-espocrm-group-4",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lengoctuan2406/Playwright-SuiteCRM-Group-4.git"
+    "url": "git+https://github.com/Lengoctuan2406/Playwright-Espocrm-Group-4.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Lengoctuan2406/Playwright-SuiteCRM-Group-4/issues"
+    "url": "https://github.com/Lengoctuan2406/Playwright-Espocrm-Group-4/issues"
   },
-  "homepage": "https://github.com/Lengoctuan2406/Playwright-SuiteCRM-Group-4#readme",
+  "homepage": "https://github.com/Lengoctuan2406/Playwright-Espocrm-Group-4#readme",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.5.2",
