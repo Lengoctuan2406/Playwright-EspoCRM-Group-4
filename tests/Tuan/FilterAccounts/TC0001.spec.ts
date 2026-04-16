@@ -1,0 +1,51 @@
+import { test, expect } from "@playwright/test";
+import { AccountsPage } from "../../pages/AccountsPage";
+import { sleep, generateId } from '../../../src/utils/CoreGroup4';
+import { DatabaseActions } from '../../../src/utils/DatabaseGroup4';
+
+
+// Dùng test.describe để gom nhóm các test case của module Accounts
+test.describe('TC0001: Kiểm tra Show Data với các Filter sau: All, Starred, Recently Created, Only Me, Followed', () => {
+    // Khởi tạo các biến dùng chung
+    let accountsPage: AccountsPage;
+    let db: DatabaseActions;
+
+    // Chạy trước mỗi test case trong group này
+    test.beforeEach(async ({ page }) => {
+        accountsPage = new AccountsPage(page);
+        db = new DatabaseActions();
+
+        // Kiểm tra điều kiện trước khi test cho filter All, trên 26 bản ghi thì mới test
+        const result = await db.getOne(`
+            SELECT EXISTS(
+                SELECT 1 FROM account 
+                WHERE deleted = 0 
+                LIMIT 1 OFFSET 25
+            ) AS hasEnough
+        `);
+        if (!result?.hasEnough) {
+            throw new Error(`FAILED: Hệ thống không có đủ 26 bản ghi trở lên (Yêu cầu > 25) để thực hiện test.`);
+        }
+
+        // Đăng nhập một lần cho tất cả các test bên dưới
+        await accountsPage.login(process.env.PAGE_ADMIN_USERNAME!, process.env.PAGE_ADMIN_PASSWORD!);
+    });
+
+    // Chạy sau khi tất cả các test case trong group này hoàn thành
+    test.afterAll(async () => {
+        await db.close();
+    });
+
+    test("Kiểm tra Show Data với các Filter sau: All", async ({
+        page,
+    }) => {
+        // Mở Filter trong thanh Search và Click vào All
+        await accountsPage.clickFilterAll();
+        // Load dữ liệu bằng Show More đến khi đủ và cộng Data lại
+        const UItotal = await accountsPage.countAllRows();
+        // Lấy dữ liệu thực tế dưới DB để check với giao diện
+        const accounts = await db.query("SELECT COUNT(id) total FROM account WHERE deleted = 0");
+        // Kiểm tra dữ liệu trên UI và DB có khớp nhau không
+        await expect(UItotal).toBe(accounts[0].total);
+    });
+});
