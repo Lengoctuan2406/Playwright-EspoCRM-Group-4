@@ -18,6 +18,23 @@ export class DatabaseActions {
     }
 
     /**
+     * Xóa dữ liệu mẫu trên nhiều bảng cùng lúc
+     * @param keyword Từ khóa dùng để nhận diện dữ liệu test
+     */
+    async cleanAllTestData(keyword: string): Promise<void> {
+        const tables = [
+            { name: 'account', column: 'description' },
+            { name: 'lead', column: 'description' },
+            { name: 'contact', column: 'description' }
+        ];
+        for (const table of tables) {
+            const sql = `DELETE FROM \`${table.name}\` WHERE \`${table.column}\` LIKE ?`;
+            await this.query(sql, [`%${keyword}%`]);
+            console.log(`>>> Đã dọn dẹp bảng: ${table.name}`);
+        }
+    }
+
+    /**
      * 1. Thực thi truy vấn tổng quát
      */
     async query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
