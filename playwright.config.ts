@@ -2,10 +2,22 @@ import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
 dotenv.config({ path: path.resolve(__dirname, ".env") });
+// Config thêm
+export const CONFIG = {
+  COMMON: {
+    STORAGE_PATH: path.join(__dirname, "src/auth/storage-state.json"),
+  },
+  ENV: {
+    PAGE_URL: "https://codezy.io.vn",
+    TEST_KEY: "UAT_TESTING"
+  },
+};
 /**
  * Đọc đầy đủ tại https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 30000,
+  globalTimeout: 600000,
   /* 
     testDir
       Đường dẫn quét chạy các tests
@@ -56,7 +68,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: process.env.PAGE_URL,
+    baseURL: CONFIG.ENV.PAGE_URL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
     /* Mở Browser lên để xem thao tác, true thì không hiện UI, tăng tốc độ chạy */
@@ -152,44 +164,54 @@ export default defineConfig({
       Dùng cho lưu trạng thái đăng nhập, cookie trình duyệt để
       không đăng nhập nhiều lần trên nhiều test 
     */
-    // storageState: "storage-state.json",
+    // storageState: CONFIG.COMMON.STORAGE_PATH,
     /* Một số custom userAgent để nhận diện traffic test hay người dùng thật */
     // userAgent: "some custom ua",
 
     // TODO Tiếp tục với https://playwright.dev/docs/test-configuration
   },
+  testIgnore: /.*\.ignore\.ts/,
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/, // Chỉ tìm các file có đuôi .setup.ts
+    },
+    {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+      dependencies: ['setup'],
     },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-    /* Test against mobile viewports. */
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
-    },
-    /* Test against branded browsers. */
-    {
-      name: "Microsoft Edge",
-      use: { ...devices["Desktop Edge"], channel: "msedge" },
-    },
-    {
-      name: "Google Chrome",
-      use: { ...devices["Desktop Chrome"], channel: "chrome" },
-    },
+    // {
+    //   name: "firefox",
+    //   use: { ...devices["Desktop Firefox"] },
+    //   dependencies: ['setup'],
+    // },
+    // {
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"] },
+    //   dependencies: ['setup'],
+    // },
+    // {
+    //   name: "Mobile Chrome",
+    //   use: { ...devices["Pixel 5"] },
+    //   dependencies: ['setup'],
+    // },
+    // {
+    //   name: "Mobile Safari",
+    //   use: { ...devices["iPhone 12"] },
+    //   dependencies: ['setup'],
+    // },
+    // {
+    //   name: "Microsoft Edge",
+    //   use: { ...devices["Desktop Edge"], channel: "msedge" },
+    //   dependencies: ['setup'],
+    // },
+    // {
+    //   name: "Google Chrome",
+    //   use: { ...devices["Desktop Chrome"], channel: "chrome" },
+    //   dependencies: ['setup'],
+    // },
   ],
   /* Đảm bảo server hoạt động trước khi test */
   // webServer: {

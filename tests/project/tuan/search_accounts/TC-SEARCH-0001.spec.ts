@@ -1,6 +1,12 @@
 import { test, expect } from "@playwright/test";
-import { AccountsPage } from "../../pages/AccountsPage";
-import { DatabaseActions } from '../../../src/utils/DatabaseGroup4';
+import { AccountsPage } from "../../../pages/AccountsPage";
+import { DatabaseActions } from '../../../../src/utils/Database';
+import { CONFIG } from "../../../../playwright.config";
+
+// Sử dụng storageState cho Test này
+test.use({
+    storageState: CONFIG.COMMON.STORAGE_PATH 
+});
 
 // Dùng test.describe để gom nhóm các test case của module Accounts
 test.describe('TC-SEARCH-0001: Kiểm tra Show Data với các Filter sau: All, Starred, Recently Created, Only Me, Followed', () => {
@@ -39,8 +45,8 @@ test.describe('TC-SEARCH-0001: Kiểm tra Show Data với các Filter sau: All, 
         if (!count_starred_acc?.hasEnough) {
             throw new Error("FAILED: Không đủ 6 bản ghi Starred để test filter Starred của Account");
         }
-        // Đăng nhập một lần cho tất cả các test bên dưới
-        await accountsPage.login(process.env.PAGE_ADMIN_USERNAME!, process.env.PAGE_ADMIN_PASSWORD!);
+        // Truy cập vào trang Account
+        await accountsPage.redirect();
     });
 
     // Chạy sau khi tất cả các test case trong group này hoàn thành
@@ -52,7 +58,7 @@ test.describe('TC-SEARCH-0001: Kiểm tra Show Data với các Filter sau: All, 
         page,
     }) => {
         // Mở Filter trong thanh Search và Click vào All
-        await accountsPage.clickFilterAll();
+        await accountsPage.clickFilter("All");
         // Load dữ liệu bằng Show More đến khi đủ và cộng Data lại
         const UItotal = await accountsPage.countAllRows();
         // Lấy dữ liệu thực tế dưới DB để check với giao diện
@@ -67,7 +73,7 @@ test.describe('TC-SEARCH-0001: Kiểm tra Show Data với các Filter sau: All, 
         page,
     }) => {
         // Mở Filter trong thanh Search và Click vào Starred
-        await accountsPage.clickFilterStarred();
+        await accountsPage.clickFilter("Starred");
         // Load dữ liệu bằng Show More đến khi đủ và cộng Data lại
         const UItotal = await accountsPage.countAllRows();
         // Lấy dữ liệu thực tế dưới DB để check với giao diện

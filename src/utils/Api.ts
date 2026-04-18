@@ -14,11 +14,11 @@ export class ApiActions {
      */
     private getHeaders(customHeaders?: { [key: string]: string }) {
         const headers: { [key: string]: string } = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            "Content-Type": "application/json",
+            "Accept": "application/json",
         };
         if (this.token) {
-            headers['Authorization'] = `Bearer ${this.token}`;
+            headers["Authorization"] = "Bearer ${this.token}";
         }
         return { ...headers, ...customHeaders };
     }

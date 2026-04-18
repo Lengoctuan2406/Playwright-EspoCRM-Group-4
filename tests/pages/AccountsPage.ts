@@ -22,21 +22,24 @@ export class AccountsPage extends LoginPage {
         this.showMoreButton = page.locator(LOCATORS.showMoreButton);
         this.listRows = page.locator(LOCATORS.listRows);
     }
+
     /**
      * Ghi đè hàm login để truy cập thẳng vào module Account
      */
     async login(username: string, password: string): Promise<void> {
         // 1. Gọi hàm login của lớp cha (LoginPage) để thực hiện đăng nhập tại trang chủ
         await super.login(username, password);
-
         // 2. Sau khi đăng nhập xong, mới điều hướng sang trang Account
-        await this.page.goto(`${process.env.PAGE_URL}/#Account`, {
-            waitUntil: "networkidle",
-            timeout: parseInt(process.env.SETUP_TIMEOUT!)
+        await this.page.goto("/#Account", {
+            waitUntil: "networkidle"
         });
+    }
 
-        // 3. Xác nhận đã ở đúng trang Account
-        await this.page.waitForURL(/.*#Account/);
+    async redirect(): Promise<void> {
+        // 2. Điều hướng sang trang Account
+        await this.page.goto("/#Account", {
+            waitUntil: "networkidle"
+        });
     }
 
     /**
@@ -54,6 +57,27 @@ export class AccountsPage extends LoginPage {
             );
         }
         return await this.listRows.count();
+    }
+
+    async clickFilter(opts: string) {
+        // 1. Click mở Dropdown Filter (Nút này nằm cạnh ô Search)
+        await this.page.click(LOCATORS.dropdownButton);
+        // 2. Chờ menu hiển thị (đảm bảo menu đã bung ra)
+        await this.page.waitForSelector('ul.filter-menu', { state: 'visible' });
+        // 3. Click vào tùy chọn "All" bên trong menu
+        switch (opts) {
+            case "Starred":
+                await this.page.click(LOCATORS.optionStarred);
+                break;
+            case "RecentlyCreated":
+                await this.page.click(LOCATORS.optionRecentlyCreated);
+                break;
+            default:
+                await this.page.click(LOCATORS.optionAll);
+                break;
+        }
+        // 4. Đợi hệ thống tải lại dữ liệu sau khi lọc
+        await this.page.waitForLoadState('networkidle');
     }
 
     async clickFilterAll() {
@@ -84,7 +108,7 @@ export class AccountsPage extends LoginPage {
         // 2. Chờ menu hiển thị (đảm bảo menu đã bung ra)
         await this.page.waitForSelector('ul.filter-menu', { state: 'visible' });
         // 3. Click vào tùy chọn "All" bên trong menu
-        await this.page.click(LOCATORS.optionStarred);
+        await this.page.click(LOCATORS.optionRecentlyCreated);
         // 4. Đợi hệ thống tải lại dữ liệu sau khi lọc
         await this.page.waitForLoadState('networkidle');
     }

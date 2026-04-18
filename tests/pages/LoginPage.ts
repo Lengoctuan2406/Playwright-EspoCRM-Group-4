@@ -18,9 +18,8 @@ export class LoginPage {
     this.loginButton = page.locator(LOCATORS.loginButton);
   }
   async login(username: string, password: string): Promise<void> {
-    await this.page.goto(process.env.PAGE_URL!, {
-      waitUntil: 'domcontentloaded',
-      timeout: parseInt(process.env.SETUP_TIMEOUT!)
+    await this.page.goto('/', {
+      waitUntil: 'domcontentloaded'
     })
     await this.userNameInput.fill(username)
     await this.passwordInput.fill(password)

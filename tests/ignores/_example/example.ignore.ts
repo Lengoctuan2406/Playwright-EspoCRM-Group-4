@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { log, sleep, generateId } from '../../src/utils/CoreGroup4';
+import { log, sleep, generateId } from '../../src/utils/Core';
 
 test('Chứa các mẫu code', async () => {
   // Tạo ID ngẫu nhiên
