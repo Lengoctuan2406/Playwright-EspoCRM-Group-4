@@ -8,7 +8,7 @@ export const CONFIG = {
     STORAGE_PATH: path.join(__dirname, "src/auth/storage-state.json"),
   },
   ENV: {
-    PAGE_URL: "https://codezy.io.vn",
+    PAGE_URL: process.env.PAGE_URL,
     TEST_KEY: "UAT_TESTING"
   },
 };
