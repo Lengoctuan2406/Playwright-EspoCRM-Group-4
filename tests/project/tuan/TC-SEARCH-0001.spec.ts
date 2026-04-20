@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { AccountsPage } from "../../../pages/AccountsPage";
-import { DatabaseActions } from '../../../../src/utils/Database';
-import { CONFIG } from "../../../../playwright.config";
+import { AccountsPage } from "../../pages/AccountsPage";
+import { DatabaseActions } from '../../../src/utils/Database';
+import { CONFIG } from "../../../playwright.config";
 
 // Sử dụng storageState cho Test này
 test.use({

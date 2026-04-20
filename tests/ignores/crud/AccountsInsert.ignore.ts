@@ -77,7 +77,7 @@ insertDB("Tạo thêm dữ liệu Account test với Assigned User là Admin", a
     page,
 }) => {
     // Số lượng records muốn tạo
-    const number_create = 3;
+    const number_create = 30;
     // login vào
     const accountsPage = new AccountsPage(page);
     await accountsPage.redirect(); 
