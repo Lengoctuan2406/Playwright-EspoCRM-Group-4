@@ -1,6 +1,6 @@
 import { test as deleteDB } from "@playwright/test";
-import { DatabaseActions } from '../../../src/utils/Database';
-import { CONFIG } from "../../../playwright.config";
+import { DatabaseActions } from '../../src/utils/Database';
+import { CONFIG } from "../../playwright.config";
 
 deleteDB.use({
     headless: true, // Chạy không bật browser
@@ -13,6 +13,6 @@ deleteDB.use({
 
 deleteDB("Xóa dữ liệu test", async () => {
     const db = new DatabaseActions();
-    await db.cleanAllTestData(CONFIG.ENV.TEST_KEY);
+    await db.cleanTestData(CONFIG.ENV.TEST_KEY);
     await db.close();
 });

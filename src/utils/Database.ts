@@ -21,7 +21,7 @@ export class DatabaseActions {
      * Xóa dữ liệu mẫu trên nhiều bảng cùng lúc
      * @param keyword Từ khóa dùng để nhận diện dữ liệu test
      */
-    async cleanAllTestData(keyword: string): Promise<void> {
+    async cleanTestData(keyword: string): Promise<void> {
         const tables = [
             { name: 'account', column: 'description' },
             { name: 'lead', column: 'description' },

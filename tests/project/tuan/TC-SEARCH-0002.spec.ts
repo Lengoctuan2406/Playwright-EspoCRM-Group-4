@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { AccountsPage } from "../../pages/AccountsPage";
+import { AccountsPage } from "../../pages/AccountPage";
 import { DatabaseActions } from '../../../src/utils/Database';
 import { CONFIG } from "../../../playwright.config";
 
