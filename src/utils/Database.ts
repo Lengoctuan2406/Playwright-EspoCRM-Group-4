@@ -96,15 +96,23 @@ export class DatabaseActions {
     /**
      * isAnyExists
      */
-    async isAnyExists(tableName: string, column: string, values: any[]): Promise<boolean> {
-        if (!values || values.length === 0) return true;
-        const sql = `SELECT 1 FROM \`${tableName}\` WHERE \`${column}\` IN (?) LIMIT 1`;
+    async isAnyExists(tableName: string, column: string, values: any | any[]): Promise<boolean> {
+        // 1. Tự động chuyển đổi thành mảng nếu đầu vào là giá trị đơn lẻ
+        const normalizedValues = Array.isArray(values) ? values : [values];
+        // 2. Kiểm tra mảng rỗng
+        if (normalizedValues.length === 0) return false;
+        const sql = `SELECT 1 
+        FROM \`${tableName}\` 
+        WHERE deleted = 0
+        AND \`${column}\` IN (?) 
+        LIMIT 1`;
         try {
-            const [rows] = await this.pool.query(sql, [values]);
+            // Truyền normalizedValues vào trong một mảng bọc ngoài [normalizedValues]
+            const [rows] = await this.pool.query(sql, [normalizedValues]);
             const results = rows as any[];
-            return results.length === 0;
+            return results.length > 0;
         } catch (error: any) {
-            this.logError(sql, values, error);
+            this.logError(sql, normalizedValues, error);
             throw error;
         }
     }
