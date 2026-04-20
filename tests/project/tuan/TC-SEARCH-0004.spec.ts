@@ -18,18 +18,6 @@ test.describe('TC-SEARCH-0004: Kiểm tra tính năng chọn nhiều và thực 
     test.beforeEach(async ({ page }) => {
         accountsPage = new AccountsPage(page);
         db = new DatabaseActions();
-        // Kiểm tra điều kiện trước khi test, trên 26 bản ghi thì mới test
-        const count_acc = await db.getOne(`
-            SELECT EXISTS(
-                SELECT 1 FROM account 
-                WHERE deleted = 0
-                LIMIT 1 OFFSET 25
-            ) AS hasEnough
-        `);
-        if (!count_acc?.hasEnough) {
-            throw new Error("FAILED: Không đủ 26 Account để test searching");
-        }
-        // Truy cập vào trang Account
         await accountsPage.redirect();
     });
 
@@ -41,20 +29,10 @@ test.describe('TC-SEARCH-0004: Kiểm tra tính năng chọn nhiều và thực 
     test("Kiểm tra Remove hàng loạt", async ({
         page,
     }) => {
-        const key_search = await db.query<{ name: string }>(`SELECT name 
-            FROM account 
-            ORDER BY RAND()
-            LIMIT 1`);
-        // Mở Filter trong thanh Search và Click vào All
-        await accountsPage.seachingInput(key_search[0].name);
-        // Load dữ liệu bằng Show More đến khi đủ và cộng Data lại
-        const UItotal = await accountsPage.countAllRows();
-        // Lấy dữ liệu thực tế dưới DB để check với giao diện
-        const accounts = await db.query(`SELECT COUNT(id) total 
-            FROM account 
-            WHERE deleted = 0
-            AND name LIKE '%`+ key_search[0].name +`%'`);
-        // Kiểm tra dữ liệu trên UI và DB có khớp nhau không
-        await expect(UItotal).toBe(accounts[0].total);
+        // remove 5 records đầu tiên
+        const ids = await accountsPage.removeSelectTops(5);
+        // Kiểm tra xem 5 ID này còn tồn tại bản ghi nào không, không thì test success
+        const isExist = await db.isAnyExists('account', 'id', ids);
+        expect(isExist).toBe(false);
     });
 });

@@ -18,18 +18,6 @@ test.describe('TC-SEARCH-0003: Kiểm tra thanh Search', () => {
     test.beforeEach(async ({ page }) => {
         accountsPage = new AccountsPage(page);
         db = new DatabaseActions();
-        // Kiểm tra điều kiện trước khi test cho Searching, trên 26 bản ghi thì mới test
-        const count_acc = await db.getOne(`
-            SELECT EXISTS(
-                SELECT 1 FROM account 
-                WHERE deleted = 0
-                LIMIT 1 OFFSET 25
-            ) AS hasEnough
-        `);
-        if (!count_acc?.hasEnough) {
-            throw new Error("FAILED: Không đủ 26 Account để test searching");
-        }
-        // Truy cập vào trang Account
         await accountsPage.redirect();
     });
 

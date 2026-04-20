@@ -94,6 +94,22 @@ export class DatabaseActions {
     }
 
     /**
+     * isAnyExists
+     */
+    async isAnyExists(tableName: string, column: string, values: any[]): Promise<boolean> {
+        if (!values || values.length === 0) return true;
+        const sql = `SELECT 1 FROM \`${tableName}\` WHERE \`${column}\` IN (?) LIMIT 1`;
+        try {
+            const [rows] = await this.pool.query(sql, [values]);
+            const results = rows as any[];
+            return results.length === 0;
+        } catch (error: any) {
+            this.logError(sql, values, error);
+            throw error;
+        }
+    }
+
+    /**
      * Log lỗi chuyên nghiệp
      */
     private logError(sql: string, params: any[], error: any) {

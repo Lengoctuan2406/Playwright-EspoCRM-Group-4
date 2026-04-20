@@ -101,4 +101,58 @@ export class AccountsPage extends LoginPage {
         // Enter để Apply Seach
         await this.page.keyboard.press('Enter');
     }
+
+    /**
+     * Chọn các bản ghi đầu tiên và trả về danh sách ID
+     * @param count Số lượng bản ghi muốn chọn
+     * @returns Mảng các string ID của các bản ghi đã chọn
+     */
+    async removeSelectTops(count: number): Promise<string[]> {
+        const selectedIds: string[] = [];
+        // 1. Xác định phạm vi bảng Account
+        const accountList = this.page.locator('div[data-scope="Account"]');
+        const checkboxes = accountList.locator('tbody input.record-checkbox');
+        // Đợi cho đến khi ít nhất một checkbox xuất hiện (bảng đã load xong)
+        await checkboxes.first().waitFor({ state: 'visible' });
+        // 2. Tính toán số lượng thực tế có thể chọn
+        const availableCount = await checkboxes.count();
+        const limit = Math.min(count, availableCount);
+        // 3. Vòng lặp thực hiện check và lấy ID
+        for (let i = 0; i < limit; i++) {
+            const cb = checkboxes.nth(i);
+            // Thực hiện check
+            await cb.check();
+            // Lấy data-id từ thuộc tính của element
+            const id = await cb.getAttribute('data-id');
+            if (id) {
+                selectedIds.push(id);
+            }
+        }
+        // Định vị container chính
+        const toolbar = this.page.locator('.list-buttons-container');
+
+        // 1. Click Actions (Ràng buộc visible để không nhấn nhầm nút ẩn)
+        await toolbar.locator('.actions .actions-button:visible').click();
+
+        // 2. Định vị nút Remove trong menu (Dùng :visible để tránh lỗi 2 elements)
+        // Lưu ý: .actions-menu thường nằm ngoài toolbar trong DOM, 
+        // nên dùng this.page.locator sẽ an toàn hơn toolbar.locator
+        const removeOption = toolbar.locator('.actions-menu:visible a[data-action="remove"]').first();
+
+        await removeOption.waitFor({ state: 'visible' });
+        await removeOption.click();
+
+        // 3. Chờ Modal xác nhận xuất hiện
+        const confirmModal = this.page.locator('.dialog-confirm.modal.in');
+        await confirmModal.waitFor({ state: 'visible' });
+
+        // 4. Click nút "Remove" xác nhận
+        // Thêm .first() nếu cần, nhưng data-name="confirm" thường là duy nhất trong modal
+        await confirmModal.locator('button[data-name="confirm"]').click();
+
+        // 5. Chờ Modal đóng hoàn toàn trước khi làm việc khác
+        await confirmModal.waitFor({ state: 'hidden' });
+
+        return selectedIds;
+    }
 }

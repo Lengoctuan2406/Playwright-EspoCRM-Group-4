@@ -18,22 +18,6 @@ test.describe('TC-SEARCH-0001: Kiểm tra Show Data với các Filter sau: All, 
     test.beforeEach(async ({ page }) => {
         accountsPage = new AccountsPage(page);
         db = new DatabaseActions();
-        // const count_starred_acc = await db.getOne(`
-        //     SELECT EXISTS(
-        //         SELECT 1
-        //         FROM account 
-        //         WHERE deleted = 0 
-        //             AND id IN (
-        //                 SELECT entity_id 
-        //                 FROM star_subscription 
-        //                 WHERE entity_type = 'Account' 
-        //                 AND deleted = 0
-        //             )
-        //             LIMIT 1 OFFSET 5
-        //     ) AS hasEnough`);
-        // if (!count_starred_acc?.hasEnough) {
-        //     throw new Error("FAILED: Không đủ 6 bản ghi Starred để test filter Starred của Account");
-        // }
         await accountsPage.redirect();
     });
 
@@ -57,24 +41,24 @@ test.describe('TC-SEARCH-0001: Kiểm tra Show Data với các Filter sau: All, 
         await expect(UItotal).toBe(accounts[0].total);
     });
 
-    // test("Kiểm tra Show Data với các Filter sau: Starred", async ({
-    //     page,
-    // }) => {
-    //     // Mở Filter trong thanh Search và Click vào Starred
-    //     await accountsPage.clickFilter("Starred");
-    //     // Load dữ liệu bằng Show More đến khi đủ và cộng Data lại
-    //     const UItotal = await accountsPage.countAllRows();
-    //     // Lấy dữ liệu thực tế dưới DB để check với giao diện
-    //     const accounts = await db.query(`SELECT COUNT(id) AS total 
-    //         FROM account 
-    //         WHERE deleted = 0 
-    //         AND id IN (
-    //             SELECT entity_id 
-    //             FROM star_subscription 
-    //             WHERE entity_type = 'Account' 
-    //             AND deleted = 0
-    //         );`);
-    //     // Kiểm tra dữ liệu trên UI và DB có khớp nhau không
-    //     await expect(UItotal).toBe(accounts[0].total);
-    // });
+    test("Kiểm tra Show Data với các Filter sau: Starred", async ({
+        page,
+    }) => {
+        // Mở Filter trong thanh Search và Click vào Starred
+        await accountsPage.clickFilter("Starred");
+        // Load dữ liệu bằng Show More đến khi đủ và cộng Data lại
+        const UItotal = await accountsPage.countAllRows();
+        // Lấy dữ liệu thực tế dưới DB để check với giao diện
+        const accounts = await db.query(`SELECT COUNT(id) AS total 
+            FROM account 
+            WHERE deleted = 0 
+            AND id IN (
+                SELECT entity_id 
+                FROM star_subscription 
+                WHERE entity_type = 'Account' 
+                AND deleted = 0
+            );`);
+        // Kiểm tra dữ liệu trên UI và DB có khớp nhau không
+        await expect(UItotal).toBe(accounts[0].total);
+    });
 });

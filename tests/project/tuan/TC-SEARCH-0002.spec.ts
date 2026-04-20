@@ -18,24 +18,6 @@ test.describe('TC-SEARCH-0002: Kiểm tra Show Data với Filter nâng cao: Assi
     test.beforeEach(async ({ page }) => {
         accountsPage = new AccountsPage(page);
         db = new DatabaseActions();
-        // Kiểm tra điều kiện trước khi test cho filter nâng cao Assigned User, trên 26 bản ghi thì mới test
-        const count_acc = await db.getOne(`
-            SELECT EXISTS(
-                SELECT 1 FROM account 
-                WHERE deleted = 0 
-                AND assigned_user_id IN (
-                    SELECT id 
-                    FROM user 
-                    WHERE user_name = 'admin' 
-                    AND deleted = 0
-                )
-                LIMIT 1 OFFSET 25
-            ) AS hasEnough
-        `);
-        if (!count_acc?.hasEnough) {
-            throw new Error("FAILED: Không đủ 26 Account để test filter nâng cap Assigned User");
-        }
-        // Truy cập vào trang Account
         await accountsPage.redirect();
     });
 

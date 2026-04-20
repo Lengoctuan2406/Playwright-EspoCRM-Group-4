@@ -5,6 +5,7 @@ import { CONFIG } from "../../../playwright.config";
 import { DataFaker } from '../../../src/utils/DataFaker';
 
 crud.use({
+    channel: 'chromium',
     headless: true,
     viewport: { width: 1280, height: 720 },
     launchOptions: {
@@ -21,6 +22,7 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
     crud.beforeEach(async ({ page }) => {
         accountsPage = new AccountsPage(page);
         db = new DatabaseActions();
+        await accountsPage.redirect();
     });
     crud.afterAll(async () => {
         await db.close();
@@ -37,9 +39,6 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
         if (amountToCreate === 0) {
             return;
         }
-
-        const accountsPage = new AccountsPage(page);
-        await accountsPage.redirect();
         for (let i = 0; i < amountToCreate; i++) {
             await page.goto("/#Account/create", { waitUntil: "domcontentloaded" });
             await page.fill('input[data-name="name"]', DataFaker.getFullName());
@@ -72,9 +71,6 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
         if (amountToCreate === 0) {
             return;
         }
-
-        const accountsPage = new AccountsPage(page);
-        await accountsPage.redirect();
         for (let i = 0; i < amountToCreate; i++) {
             await page.goto("/#Account/create", { waitUntil: "domcontentloaded" });
             await page.fill('input[data-name="name"]', DataFaker.getFullName());
@@ -108,9 +104,6 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
         if (amountToCreate === 0) {
             return;
         }
-
-        const accountsPage = new AccountsPage(page);
-        await accountsPage.redirect();
         for (let i = 0; i < amountToCreate; i++) {
             await page.goto("/#Account/create", { waitUntil: "domcontentloaded" });
             await page.fill('input[data-name="name"]', DataFaker.getFullName());
