@@ -30,7 +30,7 @@ test.describe('TC-CRUD-0001: Kiểm tra Save dữ liệu với tất cả các F
         await page.fill('input[data-name="website"]', DataFaker.getWebsite());
         await page.fill('.field[data-name="emailAddress"] input.email-address', DataFaker.getEmail());
         await page.fill('textarea[data-name="billingAddressStreet"]', DataFaker.getStreet());
-        await page.fill('textarea[data-name="description"]', CONFIG.ENV.TEST_KEY);
+        await page.fill('textarea[data-name="description"]', DataFaker.getTestDes());
         await Promise.all([
             page.waitForNavigation({ waitUntil: 'networkidle' }),
             page.click('button[data-action="save"]')
@@ -39,7 +39,7 @@ test.describe('TC-CRUD-0001: Kiểm tra Save dữ liệu với tất cả các F
         const currentUrl = page.url();
         const match = currentUrl.match(/\/([^/]+)$/);
         const accountId = match ? match[1] : null;
-        const isExist = await db.isAnyExists('account', 'id', accountId);
+        const isExist = await db.isAnyExists('account', 'id', [accountId]);
         expect(isExist).toBe(true);
     });
 });

@@ -84,37 +84,17 @@ export class DatabaseActions {
         }
     }
 
-    /**
-     * 4. Kiểm tra xem bản ghi có tồn tại không (Trả về boolean)
-     */
-    async exists(tableName: string, conditions: string, params: any[] = []): Promise<boolean> {
-        const sql = `SELECT 1 FROM \`${tableName}\` WHERE ${conditions} LIMIT 1`;
-        const result = await this.getOne(sql, params);
-        return result !== null;
-    }
-
-    /**
-     * isAnyExists
-     */
-    async isAnyExists(tableName: string, column: string, values: any | any[]): Promise<boolean> {
-        // 1. Tự động chuyển đổi thành mảng nếu đầu vào là giá trị đơn lẻ
-        const normalizedValues = Array.isArray(values) ? values : [values];
-        // 2. Kiểm tra mảng rỗng
-        if (normalizedValues.length === 0) return false;
-        const sql = `SELECT 1 
-        FROM \`${tableName}\` 
-        WHERE deleted = 0
-        AND \`${column}\` IN (?) 
-        LIMIT 1`;
-        try {
-            // Truyền normalizedValues vào trong một mảng bọc ngoài [normalizedValues]
-            const [rows] = await this.pool.query(sql, [normalizedValues]);
-            const results = rows as any[];
-            return results.length > 0;
-        } catch (error: any) {
-            this.logError(sql, normalizedValues, error);
-            throw error;
+    async isAnyExists(tableName: string, column: string, values: any[]): Promise<boolean> {
+        for (const value of values) {
+            const sql = `SELECT 1 
+                FROM \`${tableName}\` 
+                WHERE deleted = 0 
+                AND \`${column}\` LIKE ? 
+                LIMIT 1`;
+            const result = await this.getOne(sql, [`%${value}%`]);
+            if (result !== null) return true;
         }
+        return false;
     }
 
     /**

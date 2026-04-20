@@ -1,4 +1,7 @@
+import fs from 'fs';
+import { randomUUID } from 'crypto';
 import { fakerVI as faker } from '@faker-js/faker';
+import { CONFIG } from "../../playwright.config";
 
 export class DataFaker {
     static getRandomNumber(min: number = 10, max: number = 100): number {
@@ -27,6 +30,9 @@ export class DataFaker {
     }
     static getDescription(sentences: number = 2): string {
         return faker.lorem.sentences(sentences);
+    }
+    static getTestDes(): string {
+        return `${CONFIG.ENV.TEST_KEY}[${randomUUID()}]`;
     }
     static getWebsite(): string {
         return faker.internet.url();

@@ -10,7 +10,7 @@ test.use({
 });
 
 // Dùng test.describe để gom nhóm các test case của module Accounts
-test.describe('TC-CRUD-0002: Kiểm tra Save dữ liệu với Field Required', () => {
+test.describe('TC-RELATIONSHIP-0001: Kiểm tra Create mới Relationship với Contacts', () => {
     // Khởi tạo các biến dùng chung
     let accountsPage: AccountsPage;
     let db: DatabaseActions;
@@ -35,7 +35,7 @@ test.describe('TC-CRUD-0002: Kiểm tra Save dữ liệu với Field Required', 
         await page.fill('input[data-name="website"]', website);
         await page.fill('.field[data-name="emailAddress"] input.email-address', DataFaker.getEmail());
         await page.fill('textarea[data-name="billingAddressStreet"]', DataFaker.getStreet());
-        await page.fill('textarea[data-name="description"]', DataFaker.getTestDes());
+        await page.fill('textarea[data-name="description"]', CONFIG.ENV.TEST_KEY);
         await page.click('button[data-action="save"]')
         // Kiểm tra có Create không
         await page.waitForTimeout(1000);

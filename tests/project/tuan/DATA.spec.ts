@@ -45,7 +45,7 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
             await page.fill('input[data-name="website"]', DataFaker.getWebsite());
             await page.fill('.field[data-name="emailAddress"] input.email-address', DataFaker.getEmail());
             await page.fill('textarea[data-name="billingAddressStreet"]', DataFaker.getStreet());
-            await page.fill('textarea[data-name="description"]', CONFIG.ENV.TEST_KEY);
+            await page.fill('textarea[data-name="description"]', DataFaker.getTestDes());
             await Promise.all([
                 page.waitForNavigation({ waitUntil: 'networkidle' }),
                 page.click('button[data-action="save"]')
@@ -77,7 +77,7 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
             await page.fill('input[data-name="website"]', DataFaker.getWebsite());
             await page.fill('.field[data-name="emailAddress"] input.email-address', DataFaker.getEmail());
             await page.fill('textarea[data-name="billingAddressStreet"]', DataFaker.getStreet());
-            await page.fill('textarea[data-name="description"]', CONFIG.ENV.TEST_KEY);
+            await page.fill('textarea[data-name="description"]', DataFaker.getTestDes());
             await Promise.all([
                 page.waitForNavigation({ waitUntil: 'networkidle' }),
                 page.click('button[data-action="save"]')
@@ -110,7 +110,7 @@ crud.describe('Chạy các hàm Create Data mẫu cho Account', () => {
             await page.fill('input[data-name="website"]', DataFaker.getWebsite());
             await page.fill('.field[data-name="emailAddress"] input.email-address', DataFaker.getEmail());
             await page.fill('textarea[data-name="billingAddressStreet"]', DataFaker.getStreet());
-            await page.fill('textarea[data-name="description"]', CONFIG.ENV.TEST_KEY);
+            await page.fill('textarea[data-name="description"]', DataFaker.getTestDes());
             await page.fill('.field[data-name="assignedUser"] input[data-name="assignedUserName"]', 'Admin');
             await page.locator('.autocomplete-suggestions:visible .autocomplete-suggestion', {
                 hasText: 'Admin'
